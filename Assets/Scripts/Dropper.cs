@@ -8,6 +8,7 @@ public class Dropper : MonoBehaviour
     Rigidbody rigidbody;
 
     [SerializeField] float timeToWait = 3f;
+    [SerializeField] bool makeInvisible = true;
     
 
     // Start is called before the first frame update
@@ -15,7 +16,7 @@ public class Dropper : MonoBehaviour
     {
         renderer = GetComponent<MeshRenderer>();
         rigidbody = GetComponent<Rigidbody>();
-        ChangeDropperVisibillity(false);
+        ChangeDropperVisibillity(false, makeInvisible);
     }
 
     // Update is called once per frame
@@ -23,13 +24,17 @@ public class Dropper : MonoBehaviour
     {
         if(Time.time > timeToWait)
         {
-            ChangeDropperVisibillity(true);
+            ChangeDropperVisibillity(true, makeInvisible);
         }
     }
 
-    void ChangeDropperVisibillity(bool isActive)
+    void ChangeDropperVisibillity(bool isActive, bool makeInvisible)
     {
-        renderer.enabled = isActive;
+        if(makeInvisible)
+        {
+            renderer.enabled = isActive;
+        }
+        
         rigidbody.useGravity = isActive;
     }
 }
